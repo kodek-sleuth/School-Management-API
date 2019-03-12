@@ -16,7 +16,9 @@ def create_app(config_name):
 
 
     from app.auth.views import admin 
+    from app.pupils.views import pupil 
     app.register_blueprint(admin)
+    app.register_blueprint(pupil)
    
     return app
 
