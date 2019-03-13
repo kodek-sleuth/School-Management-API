@@ -31,6 +31,15 @@ class Create_Pupil(MethodView):
             }
             return make_response(jsonify(response)), 201
 
+class Search_Pupil(MethodView):
+    def get(self, school_id):
+        get_pupil=Pupil.query.filter_by(school_id=school_id).first()
+        toStr=str(get_pupil)
+        toLoading=json.loads(toStr)
+        return make_response(jsonify(toLoading)), 200
 
 create_pupil=Create_Pupil.as_view('create_pupil')
+search_pupil=Search_Pupil.as_view('search_pupil')
+
+pupil.add_url_rule('/pupil/<string:school_id>', view_func=search_pupil, methods=['GET'])
 pupil.add_url_rule('/auth/pupil/Register', view_func=create_pupil, methods=['POST'])

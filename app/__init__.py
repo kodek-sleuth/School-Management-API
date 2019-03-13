@@ -17,8 +17,13 @@ def create_app(config_name):
 
     from app.auth.views import admin 
     from app.pupils.views import pupil 
+    from app.Bot.views import subject_bot
+    from app.Bot_Results.views import results_bot
+
     app.register_blueprint(admin)
     app.register_blueprint(pupil)
+    app.register_blueprint(subject_bot)
+    app.register_blueprint(results_bot)
    
     return app
 
