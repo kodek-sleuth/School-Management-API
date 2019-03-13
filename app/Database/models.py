@@ -51,6 +51,9 @@ class Pupil(db.Model):
     english_bot=db.relationship('English_Bot', lazy=True, backref='englishbot')
     sst_bot=db.relationship('Sst_Bot', lazy=True, backref='sstbot')
     science_bot=db.relationship('Science_Bot', lazy=True, backref='sciencebot')
+    quran_bot=db.relationship('Quran_Bot', lazy=True, backref='quranbot')
+    arabic_bot=db.relationship('Arabic_Bot', lazy=True, backref='arabicbot')
+    fiqul_libaadaat_bot=db.relationship('Fiqul_Libaadaat_Bot', lazy=True, backref='fiqul_libaadaat_bot')
 
     def __init__(self, name, date_of_birth, age, class_stream, guardian, phone_number, school_id):
         self.name=name
@@ -202,3 +205,101 @@ class Science_Bot(db.Model):
         }
 
         return json.dumps(science_object)
+
+class Quran_Bot(db.Model):
+    __tablename__='quranbeginning'
+
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    marks=db.Column(db.Integer, nullable=False, default=0)
+    aggregate=db.Column(db.Integer, nullable=False, default=9)
+    teacher=db.Column(db.String(100), nullable=False)
+    Pupil_id=db.Column(db.Integer, db.ForeignKey('pupil.id'))
+
+    def __init__(self, marks, aggregate, teacher, Pupil_id):
+        self.marks=marks
+        self.aggregate=aggregate
+        self.teacher=teacher
+        self.Pupil_id=Pupil_id
+    
+    def mark_subject(_marks, _aggregate, _teacher, _Pupil_id):
+        entered_marks=Quran_Bot(marks=_marks, aggregate=_aggregate, teacher=_teacher, Pupil_id=_Pupil_id)
+        db.session.add(entered_marks)
+        db.session.commit()
+    
+    def edit_subject(_marks, _aggregate):
+        updated_marks=Quran_Bot(marks=_marks, aggregate=_aggregate)
+        db.session.commit()
+    
+    def __repr__(self):
+        quran_object={
+            "Marks":self.marks,
+            "Aggregate":self.aggregate
+        }
+
+        return json.dumps(quran_object)
+
+class Arabic_Bot(db.Model):
+    __tablename__='arabicbeginning'
+
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    marks=db.Column(db.Integer, nullable=False, default=0)
+    aggregate=db.Column(db.Integer, nullable=False, default=9)
+    teacher=db.Column(db.String(100), nullable=False)
+    Pupil_id=db.Column(db.Integer, db.ForeignKey('pupil.id'))
+
+    def __init__(self, marks, aggregate, teacher, Pupil_id):
+        self.marks=marks
+        self.aggregate=aggregate
+        self.teacher=teacher
+        self.Pupil_id=Pupil_id
+    
+    def mark_subject(_marks, _aggregate, _teacher, _Pupil_id):
+        entered_marks= Arabic_Bot(marks=_marks, aggregate=_aggregate, teacher=_teacher, Pupil_id=_Pupil_id)
+        db.session.add(entered_marks)
+        db.session.commit()
+    
+    def edit_subject(_marks, _aggregate):
+        updated_marks= Arabic_Bot(marks=_marks, aggregate=_aggregate)
+        db.session.commit()
+    
+    def __repr__(self):
+        arabic_object={
+            "Marks":self.marks,
+            "Aggregate":self.aggregate
+        }
+
+        return json.dumps(arabic_object)
+
+
+class Fiqul_Libaadaat_Bot(db.Model):
+    __tablename__='fiqhulbeginning'
+
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    marks=db.Column(db.Integer, nullable=False, default=0)
+    aggregate=db.Column(db.Integer, nullable=False, default=9)
+    teacher=db.Column(db.String(100), nullable=False)
+    Pupil_id=db.Column(db.Integer, db.ForeignKey('pupil.id'))
+
+    def __init__(self, marks, aggregate, teacher, Pupil_id):
+        self.marks=marks
+        self.aggregate=aggregate
+        self.teacher=teacher
+        self.Pupil_id=Pupil_id
+    
+    def mark_subject(_marks, _aggregate, _teacher, _Pupil_id):
+        entered_marks= Fiqul_Libaadaat_Bot(marks=_marks, aggregate=_aggregate, teacher=_teacher, Pupil_id=_Pupil_id)
+        db.session.add(entered_marks)
+        db.session.commit()
+    
+    def edit_subject(_marks, _aggregate):
+        updated_marks= Fiqul_Libaadaat_Bot(marks=_marks, aggregate=_aggregate)
+        db.session.commit()
+    
+    def __repr__(self):
+        fiqul_libaadaat_object={
+            "Marks":self.marks,
+            "Aggregate":self.aggregate
+        }
+
+        return json.dumps(fiqul_libaadaat_object)
+
